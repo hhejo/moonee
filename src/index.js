@@ -11,20 +11,25 @@ function itemClickHandler(event) {
     .join('');
 
   clickedItem.innerHTML = `
-    <div class="w-16 flex flex-col justify-center items-center bg-gray-200 text-sm text-gray-700">
-      <select>
-        <option value="대분류" class="text-center">대분류</option>
-      </select>
-      <select>
-        <option value="소분류" class="text-center">소분류</option>
-      </select>
+    <div class="flex w-full">
+      <div class="w-16 flex flex-col justify-center items-center bg-gray-200 text-sm text-gray-700">
+        <select class="appearance-none bg-gray-200">
+          <option value="대분류" class="text-center">대분류</option>
+        </select>
+        <select class="appearance-none bg-gray-200">
+          <option value="소분류" class="text-center">소분류</option>
+        </select>
+      </div>
+      <div class="flex flex-col justify-between px-1 flex-1 w-full bg-gray-100">
+        <input type="text" value="${storeName}" class="w-full text-gray-900 bg-gray-100" />
+        <input type="text" value="${memo}" class="w-full h-6 text-gray-500 bg-gray-100 text-xs" />
+      </div>
+      <div class="w-20 flex justify-center items-center bg-gray-200 text-sm">
+        <input type="number" value="${price}" class="w-full bg-gray-200 text-center" />
+      </div>
     </div>
-    <div class="flex flex-col justify-between px-1 flex-1 w-full bg-gray-100">
-      <input type="text" value="${storeName}" class="w-full text-gray-900 bg-gray-100" />
-      <input type="text" value="${memo}" class="w-full h-6 text-gray-500 bg-gray-100 text-xs" />
-    </div>
-    <div class="w-20 flex justify-center items-center bg-gray-200 text-sm">
-      <input type="number" value="${price}" class="w-full text-center" />
+    <div>
+      수정
     </div>
   `;
 
