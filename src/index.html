@@ -7,6 +7,7 @@
     <title>MooNee</title>
   </head>
   <body class="flex flex-col justify-center">
+    <!-- header -->
     <header class="flex flex-col justify-center items-center">
       <h1 class="text-2xl font-bold text-gray-700">MooNee</h1>
       <div>햄버거메뉴</div>
@@ -15,35 +16,73 @@
         <div class="w-32 h-24 bg-rose-600">나간 돈</div>
       </div>
     </header>
+
+    <!-- main -->
     <main class="flex flex-col justify-center items-center">
       <div>전체 내역, 수입, 지출</div>
       <div>날짜: 2024 10 20 일</div>
       <section class="w-full">
         <ul class="">
-          <li class="flex">
+          <!-- item -->
+          <li class="flex flex-col" id="1" onclick="itemClickHandler(event)">
+            <div class="flex w-full">
+              <!-- 분류 -->
+              <div
+                class="w-16 flex flex-col justify-center items-center bg-gray-200 text-sm text-gray-700"
+              >
+                <div>대분류</div>
+                <div>소분류</div>
+              </div>
+              <!-- 정보 -->
+              <div
+                class="flex flex-col justify-between px-1 flex-1 w-full bg-gray-100"
+              >
+                <div class="title h-6 text-gray-900">지에스더프레시</div>
+                <div
+                  class="content h-6 text-gray-500 text-xs flex flex-col justify-center"
+                >
+                  메모 내용..
+                </div>
+              </div>
+              <!-- 가격 -->
+              <div
+                class="price w-20 flex justify-center items-center bg-gray-200 text-sm"
+              >
+                1,135,920
+              </div>
+            </div>
+            <div></div>
+          </li>
+
+          <!-- item -->
+          <li class="flex" id="2" onclick="itemClickHandler(event)">
             <div
-              class="w-16 p-1 flex flex-col justify-center items-center bg-gray-400 text-sm text-gray-700"
+              class="w-16 p-1 flex flex-col justify-center items-center bg-gray-200 text-sm text-gray-700"
             >
               <div>대분류</div>
               <div>소분류</div>
             </div>
-            <div class="p-1 flex-1 w-full bg-gray-300">
-              <div class="text-gray-900">지에스더프레시</div>
-              <div class="text-xs text-gray-700">메모 내용..</div>
+            <div class="p-1 flex-1 w-full bg-gray-100">
+              <div class="text-gray-900">홈플러스</div>
+              <div class="text-xs text-gray-600">
+                햇반, 두부, 소세지, 김치, ...
+              </div>
             </div>
             <div
-              class="w-20 p-1 flex justify-center items-center bg-gray-400 text-sm"
+              class="w-20 p-1 flex justify-center items-center bg-gray-200 text-sm"
             >
-              5,920
+              823,420
             </div>
           </li>
         </ul>
       </section>
+
       <section>
         <article></article>
       </section>
     </main>
+
     <footer></footer>
-    <div></div>
+    <script src="index.js"></script>
   </body>
 </html>
