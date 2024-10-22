@@ -17,7 +17,7 @@
       </div>
     </header>
 
-    <main class="flex flex-col justify-center items-center gap-1 px-2">
+    <main class="flex flex-col justify-center items-center gap-1 px-5">
       <div>전체 내역, 수입, 지출</div>
 
       <!-- 추가 버튼 -->
@@ -31,21 +31,36 @@
       </section>
 
       <!-- 추가 양식 -->
-      <section class="w-full bg-sky-100">
-        <h2 class="text-lg font-bold mb-2">새로운 거래 기록하기</h2>
+      <section class="w-full">
+        <h2 class="text-lg mb-2">새 항목 생성</h2>
         <form
           id="createItemForm"
           onsubmit="createItem(event)"
-          class="flex flex-col justify-center items-center gap-4"
+          class="flex flex-col justify-center items-center gap-3"
         >
+          <!-- 수입 | 지출 버튼 -->
+          <div class="w-full flex gap-2 h-11">
+            <button
+              onclick="cancelCreateItem(event)"
+              class="w-1/2 rounded-md border border-blue-500 text-sm text-blue-500"
+            >
+              수입
+            </button>
+            <button
+              onclick="createItem(event)"
+              class="w-1/2 rounded-md border border-red-500 text-sm text-red-500"
+            >
+              지출
+            </button>
+          </div>
           <!-- 날짜 -->
           <div class="flex items-center w-full">
-            <label for="date" class="w-10 text-sm text-gray-700">날짜</label>
+            <label for="date" class="w-10 text-sm text-gray-800">날짜</label>
             <input
               id="date"
               name="date"
               type="date"
-              class="w-full text-gray-800"
+              class="w-full text-gray-800 p-1.5 outline-none border-b-2 border-gray-100 focus:border-b-gray-800 transition"
             />
           </div>
           <!-- 금액 -->
@@ -55,22 +70,33 @@
               id="price"
               name="price"
               type="number"
-              class="w-full text-gray-800"
+              class="w-full text-gray-800 p-1.5 outline-none border-b-2 border-gray-100 focus:border-b-gray-800 transition"
             />
           </div>
           <!-- 내용 -->
-          <div class="flex items-center w-full">
+          <div class="flex items-center w-full mb-2">
             <label for="content" class="w-10 text-sm text-gray-700">내용</label>
             <input
               id="content"
               name="content"
               type="text"
-              class="w-full text-gray-800"
+              class="w-full text-gray-800 p-1.5 outline-none border-b-2 border-gray-100 focus:border-b-gray-800 transition"
             />
           </div>
-          <div class="flex justify-around">
-            <button onclick="createItem(event)" class="">기록하기</button>
-            <button onclick="cancelCreateItem(event)" class="">취소하기</button>
+          <!-- 저장 | 취소 버튼 -->
+          <div class="w-full flex gap-2 h-11">
+            <button
+              onclick="cancelCreateItem(event)"
+              class="w-4/12 rounded-md bg-gray-50 border border-gray-400 text-sm text-gray-900"
+            >
+              취소하기
+            </button>
+            <button
+              onclick="createItem(event)"
+              class="w-8/12 rounded-md bg-gray-600 text-gray-50 text-sm"
+            >
+              저장하기
+            </button>
           </div>
         </form>
       </section>
