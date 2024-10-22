@@ -17,72 +17,88 @@
       </div>
     </header>
 
-    <!-- main -->
-    <main class="flex flex-col justify-center items-center">
+    <main class="flex flex-col justify-center items-center gap-1 px-2">
       <div>전체 내역, 수입, 지출</div>
-      <div>날짜: 2024 10 20 일</div>
-      <section class="w-full">
-        <ul class="">
-          <!-- item -->
-          <li class="flex flex-col" id="1" onclick="itemClickHandler(event)">
-            <div class="flex w-full">
-              <!-- 분류 -->
-              <div
-                class="w-16 flex flex-col justify-center items-center bg-gray-200 text-sm text-gray-700"
-              >
-                <div>대분류</div>
-                <div>소분류</div>
-              </div>
-              <!-- 정보 -->
-              <div
-                class="flex flex-col justify-between px-1 flex-1 w-full bg-gray-100"
-              >
-                <div class="title h-6 text-gray-900">지에스더프레시</div>
-                <div
-                  class="content h-6 text-gray-500 text-xs flex flex-col justify-center"
-                >
-                  메모 내용..
-                </div>
-              </div>
-              <!-- 가격 -->
-              <div
-                class="price w-20 flex justify-center items-center bg-gray-200 text-sm"
-              >
-                1,135,920
-              </div>
-            </div>
-            <div></div>
-          </li>
 
+      <!-- 추가 버튼 -->
+      <section class="w-full">
+        <button
+          class="flex justify-center items-center rounded-md bg-gray-100 h-20 w-full"
+          onclick="showCreateItemForm(event)"
+        >
+          <span class="text-gray-700">새 아이템 추가하기</span>
+        </button>
+      </section>
+
+      <!-- 추가 양식 -->
+      <section class="w-full bg-sky-100">
+        <h2 class="text-lg font-bold mb-2">새로운 거래 기록하기</h2>
+        <form
+          id="createItemForm"
+          onsubmit="createItem(event)"
+          class="flex flex-col justify-center items-center gap-4"
+        >
+          <!-- 날짜 -->
+          <div class="flex items-center w-full">
+            <label for="date" class="w-10 text-sm text-gray-700">날짜</label>
+            <input
+              id="date"
+              name="date"
+              type="date"
+              class="w-full text-gray-800"
+            />
+          </div>
+          <!-- 금액 -->
+          <div class="flex items-center w-full">
+            <label for="price" class="w-10 text-sm text-gray-700">금액</label>
+            <input
+              id="price"
+              name="price"
+              type="number"
+              class="w-full text-gray-800"
+            />
+          </div>
+          <!-- 내용 -->
+          <div class="flex items-center w-full">
+            <label for="content" class="w-10 text-sm text-gray-700">내용</label>
+            <input
+              id="content"
+              name="content"
+              type="text"
+              class="w-full text-gray-800"
+            />
+          </div>
+          <div class="flex justify-around">
+            <button onclick="createItem(event)" class="">기록하기</button>
+            <button onclick="cancelCreateItem(event)" class="">취소하기</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 전체 | 수입 | 지출 필터 버튼 -->
+      <section class="w-full"></section>
+
+      <!-- 아이템 리스트 -->
+      <section class="w-full">
+        <ul id="itemList" class="flex flex-col gap-1">
           <!-- item -->
-          <li class="flex" id="2" onclick="itemClickHandler(event)">
-            <div
-              class="w-16 p-1 flex flex-col justify-center items-center bg-gray-200 text-sm text-gray-700"
-            >
-              <div>대분류</div>
-              <div>소분류</div>
+          <li
+            id="0"
+            class="item flex w-full rounded-md overflow-hidden h-16 bg-gray-200"
+            onclick="clickItem(event)"
+          >
+            <div class="flex flex-col w-full p-2">
+              <span class="date text-xs text-gray-500">날짜</span>
+              <span class="content text-gray-800">내용</span>
             </div>
-            <div class="p-1 flex-1 w-full bg-gray-100">
-              <div class="text-gray-900">홈플러스</div>
-              <div class="text-xs text-gray-600">
-                햇반, 두부, 소세지, 김치, ...
-              </div>
-            </div>
-            <div
-              class="w-20 p-1 flex justify-center items-center bg-gray-200 text-sm"
-            >
-              823,420
+            <div class="flex justify-center items-center w-28 bg-gray-100">
+              <span class="price text-gray-700">2,100</span>
             </div>
           </li>
         </ul>
       </section>
-
-      <section>
-        <article></article>
-      </section>
     </main>
 
-    <footer></footer>
     <script src="index.js"></script>
   </body>
 </html>
