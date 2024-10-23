@@ -29,6 +29,10 @@ openDatabase();
 
 function displayCreateItemFormHandler() {
   document.getElementById('createItemForm').classList.remove('hidden');
+  setTimeout(() => {
+    document.getElementById('createItemForm').classList.remove('opacity-0');
+    document.getElementById('createItemForm').classList.add('opacity-100');
+  }, 20);
   document.getElementById('createItemFormButton').classList.add('hidden');
 }
 
@@ -37,6 +41,10 @@ function hideCreateItemFormHandler() {
   document.getElementById('price').value = '';
   document.getElementById('content').value = '';
   document.getElementById('createItemForm').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('createItemForm').classList.remove('opacity-100');
+    document.getElementById('createItemForm').classList.add('opacity-0');
+  }, 20);
   document.getElementById('createItemFormButton').classList.remove('hidden');
 }
 
