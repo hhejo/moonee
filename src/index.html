@@ -6,48 +6,54 @@
     <link href="./output.css" rel="stylesheet" />
     <title>MooNee</title>
   </head>
-  <body class="flex flex-col justify-center">
+  <body class="flex flex-col justify-center px-5">
     <!-- header -->
-    <header class="flex flex-col justify-center items-center">
-      <h1 class="text-2xl font-bold text-gray-700">MooNee</h1>
-      <div>햄버거메뉴</div>
-      <div class="flex">
-        <div class="w-32 h-24 bg-sky-600">들어온 돈</div>
-        <div class="w-32 h-24 bg-rose-600">나간 돈</div>
+    <header class="flex flex-col justify-center items-center mb-4">
+      <h1 class="w-full text-3xl text-gray-700 border-b">MooNee</h1>
+      <div class="flex flex-col justify-center items-center w-full h-24">
+        <span class="text-lg text-gray-600">이번 달의 거래 내역</span>
+        <span class="text-4xl text-sky-500">289300</span>
+      </div>
+      <div class="flex w-full rounded-md border border-gray-200">
+        <div class="flex flex-col justify-center items-center w-full h-20">
+          <span class="text-sm text-gray-600">수입</span>
+          <span class="text-xl text-sky-500">924,000</span>
+        </div>
+        <div class="flex flex-col justify-center items-center w-full h-20">
+          <span class="text-sm text-gray-600">수출</span>
+          <span class="text-xl text-red-500">634,700</span>
+        </div>
       </div>
     </header>
 
-    <main class="flex flex-col justify-center items-center gap-1 px-5">
-      <div>전체 내역, 수입, 지출</div>
-
+    <main class="flex flex-col justify-center items-center gap-1">
       <!-- 추가 버튼 -->
       <section class="w-full">
         <button
-          class="flex justify-center items-center rounded-md bg-gray-100 h-20 w-full"
-          onclick="showCreateItemForm(event)"
+          id="createItemFormButton"
+          class="flex justify-center items-center rounded-md border border-gray-200 h-20 w-full"
+          onclick="displayCreateItemFormHandler(event)"
         >
-          <span class="text-gray-700">새 아이템 추가하기</span>
+          <span class="text-gray-500">새 거래 내역을 추가하세요</span>
         </button>
       </section>
 
       <!-- 추가 양식 -->
       <section class="w-full">
-        <h2 class="text-lg mb-2">새 항목 생성</h2>
         <form
           id="createItemForm"
-          onsubmit="createItem(event)"
-          class="flex flex-col justify-center items-center gap-3"
+          onsubmit="createItemSubmitHandler(event)"
+          class="flex flex-col justify-center items-center gap-3 hidden"
         >
+          <h2 class="text-lg mb-2">새 거래 내역 생성</h2>
           <!-- 수입 | 지출 버튼 -->
           <div class="w-full flex gap-2 h-11">
             <button
-              onclick="cancelCreateItem(event)"
               class="w-1/2 rounded-md border border-blue-500 text-sm text-blue-500"
             >
               수입
             </button>
             <button
-              onclick="createItem(event)"
               class="w-1/2 rounded-md border border-red-500 text-sm text-red-500"
             >
               지출
@@ -86,13 +92,13 @@
           <!-- 저장 | 취소 버튼 -->
           <div class="w-full flex gap-2 h-11">
             <button
-              onclick="cancelCreateItem(event)"
+              onclick="hideCreateItemFormHandler(event)"
               class="w-4/12 rounded-md bg-gray-50 border border-gray-400 text-sm text-gray-900"
             >
               취소하기
             </button>
             <button
-              onclick="createItem(event)"
+              onclick="createItemHandler(event)"
               class="w-8/12 rounded-md bg-gray-600 text-gray-50 text-sm"
             >
               저장하기
@@ -102,29 +108,19 @@
       </section>
 
       <!-- 전체 | 수입 | 지출 필터 버튼 -->
-      <section class="w-full"></section>
+      <section class="w-full">
+        <h2 class="text-xl text-gray-500">
+          전체 &nbsp;&nbsp; 수입 &nbsp;&nbsp; 지출
+        </h2>
+      </section>
 
       <!-- 아이템 리스트 -->
       <section class="w-full">
-        <ul id="itemList" class="flex flex-col gap-1">
-          <!-- item -->
-          <li
-            id="0"
-            class="item flex w-full rounded-md overflow-hidden h-16 bg-gray-200"
-            onclick="clickItem(event)"
-          >
-            <div class="flex flex-col w-full p-2">
-              <span class="date text-xs text-gray-500">날짜</span>
-              <span class="content text-gray-800">내용</span>
-            </div>
-            <div class="flex justify-center items-center w-28 bg-gray-100">
-              <span class="price text-gray-700">2,100</span>
-            </div>
-          </li>
-        </ul>
+        <ul id="itemList" class="w-full"></ul>
       </section>
     </main>
 
+    <script src="db.controller.js"></script>
     <script src="index.js"></script>
   </body>
 </html>
