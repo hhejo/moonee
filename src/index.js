@@ -98,6 +98,7 @@ function createItemSubmitHandler(e) {
  * @param {*} item
  */
 function createLi({ id, date, price, content }) {
+  console.log('id, price:', price);
   let $li = document.createElement('li');
   $li.id = id;
   $li.className = 'flex w-full overflow-hidden h-12 py-1 transition';
@@ -108,8 +109,8 @@ function createLi({ id, date, price, content }) {
       <span class="truncate text-gray-700">${content}</span>
     </div>
     <div class="flex justify-end items-center w-28">
-      <span class="text-sm text-gray-600 ${
-        price > 0 ? 'text-sky-500' : 'text-red-500'
+      <span class="text-sm ${
+        price >= 0 ? 'text-sky-500' : 'text-red-500'
       }">${price}</span>
     </div>
   `;
