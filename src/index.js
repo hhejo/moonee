@@ -70,9 +70,18 @@ function addItemToDB(item) {
 function createItemHandler(e) {
   e.preventDefault();
   let item = (() => {
+    let $selectedOption = document.querySelector(
+      'input[name="option"]:checked'
+    );
+    console.log('selectedOption', $selectedOption);
+    let checkedType = $selectedOption
+      ? $selectedOption.nextElementSibling.textContent.trim()
+      : null;
+    console.log('checkedType:', checkedType);
     let date = document.getElementById('date').value.trim(); // 날짜
     let price = +document.getElementById('price').value.trim(); // 가격
     let content = document.getElementById('content').value.trim(); // 내용
+    price = checkedType === '지출' ? -price : price;
     return { date, price, content };
   })(); // 아이템
   if (!item.date || !item.content) return;
@@ -91,8 +100,7 @@ function createItemSubmitHandler(e) {
 function createLi({ id, date, price, content }) {
   let $li = document.createElement('li');
   $li.id = id;
-  $li.className =
-    'flex w-full overflow-hidden h-12 py-1 transition hover:-translate-x-10';
+  $li.className = 'flex w-full overflow-hidden h-12 py-1 transition';
   $li.onclick = (e) => console.log('Clicked:', id);
   $li.innerHTML = `
     <div class="flex flex-col w-full truncate">

@@ -48,16 +48,22 @@
           <h2 class="text-lg mb-2">새 거래 내역 생성</h2>
           <!-- 수입 | 지출 버튼 -->
           <div class="w-full flex gap-2 h-11">
-            <button
-              class="w-1/2 rounded-md border border-blue-500 text-sm text-blue-500"
-            >
-              수입
-            </button>
-            <button
-              class="w-1/2 rounded-md border border-red-500 text-sm text-red-500"
-            >
-              지출
-            </button>
+            <label class="w-1/2">
+              <input type="radio" name="option" class="hidden peer" />
+              <div
+                class="flex justify-center items-center h-full cursor-pointer text-sm border border-sky-400 text-sky-500 rounded-md peer-checked:bg-sky-200 peer-checked:text-white transition-colors"
+              >
+                수입
+              </div>
+            </label>
+            <label class="w-1/2">
+              <input type="radio" name="option" class="hidden peer" checked />
+              <div
+                class="flex justify-center items-center h-full cursor-pointer text-sm border border-red-400 text-red-500 rounded-md peer-checked:bg-red-200 peer-checked:text-white transition-colors"
+              >
+                지출
+              </div>
+            </label>
           </div>
           <!-- 날짜 -->
           <div class="flex items-center w-full">
@@ -66,7 +72,7 @@
               id="date"
               name="date"
               type="date"
-              class="w-full text-gray-800 p-1.5 outline-none border-b-2 border-gray-100 focus:border-b-gray-800 transition"
+              class="w-full text-gray-800 p-1.5 outline-none border-b-2 border-gray-100 focus:border-b-gray-800 transition cursor-pointer"
             />
           </div>
           <!-- 금액 -->
@@ -120,7 +126,6 @@
       </section>
     </main>
 
-    <script src="db.controller.js"></script>
     <script src="index.js"></script>
   </body>
 </html>
