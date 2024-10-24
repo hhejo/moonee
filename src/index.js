@@ -1,36 +1,13 @@
 import { db, OBJECT_STORE } from './db.js';
+import './header.js';
+import './create-form-btn.js';
+import './create-form.js';
 
 document.addEventListener('db-opened', (e) => {
   // let db = e.detail.db;
   console.log('Database opened event received:', db);
   loadItems();
 });
-
-function displayCreateItemFormHandler() {
-  document.getElementById('createItemForm').classList.remove('hidden');
-  setTimeout(() => {
-    document.getElementById('createItemForm').classList.remove('opacity-0');
-    document.getElementById('createItemForm').classList.add('opacity-100');
-  }, 20);
-  document.getElementById('createItemFormButton').classList.add('hidden');
-}
-
-function hideCreateItemFormHandler() {
-  document.getElementById('date').value = '';
-  document.getElementById('price').value = '';
-  document.getElementById('content').value = '';
-  document.getElementById('createItemForm').classList.add('hidden');
-  setTimeout(() => {
-    document.getElementById('createItemForm').classList.remove('opacity-100');
-    document.getElementById('createItemForm').classList.add('opacity-0');
-  }, 20);
-  document.getElementById('createItemFormButton').classList.remove('hidden');
-}
-
-function formatPriceHandler($input) {
-  let value = $input.value.replace(/\D/g, '');
-  $input.value = new Intl.NumberFormat().format(value);
-}
 
 function setTotalPrice() {
   let transaction = db.transaction(OBJECT_STORE, 'readonly');
@@ -101,10 +78,12 @@ function createItemHandler(e) {
   addItemToDB(item);
   hideCreateItemFormHandler();
 }
+window.createItemHandler = createItemHandler;
 
 function createItemSubmitHandler(e) {
   e.preventDefault();
 }
+window.createItemSubmitHandler = createItemSubmitHandler;
 
 function createLi({ id, date, price, content }) {
   let $li = document.createElement('li');
