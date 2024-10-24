@@ -5,7 +5,8 @@ export function getAllItemsFromDB() {
     let items = [];
     let transaction = db.transaction(OBJECT_STORE, 'readonly');
     let objectStore = transaction.objectStore(OBJECT_STORE);
-    let cursorRequest = objectStore.openCursor(null, 'prev');
+    let index = objectStore.index('date');
+    let cursorRequest = index.openCursor(null, 'prev');
     cursorRequest.onsuccess = (e) => {
       let cursor = e.target.result;
       if (cursor) {
