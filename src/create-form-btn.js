@@ -4,7 +4,7 @@ let $createItemFormBtnSection = document.getElementById(
 let $createItemFormBtn = /*html*/ `
   <button
     id="createItemFormButton"
-    class="flex justify-center items-center rounded-md bg-gray-600 text-gray-50 h-20 w-full"
+    class="flex justify-center items-center rounded-md bg-gray-600 text-gray-50 h-16 w-full"
     onclick="displayCreateItemFormHandler(event)"
   >
     새로운 거래 내역을 추가하세요

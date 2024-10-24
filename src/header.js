@@ -14,7 +14,7 @@ $headerDiv.innerHTML = /*html*/ `
       <span class="text-lg text-gray-500 mb-3">이번 달의 거래 내역</span>
       <span id="total" class="text-5xl"></span>
     </div>
-    <div class="flex w-full rounded-md border border-gray-200 h-28">
+    <div class="flex w-full rounded-md border border-gray-200 h-24">
       <div class="flex flex-col justify-center items-center w-full">
         <span class="text-sm text-gray-500 mb-2">수입</span>
         <span id="totalIncome" class="text-2xl text-sky-500"></span>
