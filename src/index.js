@@ -1,9 +1,6 @@
 let db; // DB
 let [DB, OBJECT_STORE] = ['accountBook', 'items']; // DB 이름, ObjectStore 이름
 
-/**
- *
- */
 function openDatabase() {
   let openRequest = indexedDB.open(DB, 1);
   openRequest.onerror = (e) =>
@@ -48,13 +45,50 @@ function hideCreateItemFormHandler() {
   document.getElementById('createItemFormButton').classList.remove('hidden');
 }
 
-/**
- * DB에 item 추가
- * @param {object} item
- * @param {string} item.date
- * @param {number} item.price
- * @param {string} item.content
- */
+function formatPriceHandler($input) {
+  let value = $input.value.replace(/\D/g, '');
+  $input.value = new Intl.NumberFormat().format(value);
+}
+
+function setTotalPrice() {
+  let transaction = db.transaction(OBJECT_STORE, 'readonly');
+  let objectStore = transaction.objectStore(OBJECT_STORE);
+  let cursorRequest = objectStore.openCursor();
+  let [totalIncome, totalExpense, total] = [0, 0, 0];
+  cursorRequest.onsuccess = (e) => {
+    let cursor = e.target.result;
+    if (cursor) {
+      let { price } = cursor.value;
+      if (price >= 0) totalIncome += price;
+      else totalExpense += price;
+      total += price;
+      cursor.continue();
+    }
+    let $totalIncome = document.getElementById('totalIncome');
+    $totalIncome.textContent = new Intl.NumberFormat().format(
+      totalIncome < 0 ? -totalIncome : totalIncome
+    );
+    let $totalExpense = document.getElementById('totalExpense');
+    $totalExpense.textContent = new Intl.NumberFormat().format(
+      totalExpense < 0 ? -totalExpense : totalExpense
+    );
+    let $total = document.getElementById('total');
+    $total.textContent = new Intl.NumberFormat().format(
+      total < 0 ? -total : total
+    );
+    if (total > 0) {
+      $total.classList.remove(...['text-gray-500', 'text-red-500']);
+      $total.classList.add('text-sky-500');
+    } else if (total < 0) {
+      $total.classList.remove(...['text-gray-500', 'text-sky-500']);
+      $total.classList.add('text-red-500');
+    } else {
+      $total.classList.remove(...['text-sky-500', 'text-red-500']);
+      $total.classList.add('text-gray-500');
+    }
+  };
+}
+
 function addItemToDB(item) {
   let transaction = db.transaction(OBJECT_STORE, 'readwrite');
   let objectStore = transaction.objectStore(OBJECT_STORE);
@@ -63,10 +97,6 @@ function addItemToDB(item) {
   request.onerror = (e) => console.error('Error adding item:', request.error);
 }
 
-/**
- * 제출한 item을 DB에 추가
- * @param {Event} e
- */
 function createItemHandler(e) {
   e.preventDefault();
   let item = (() => {
@@ -79,7 +109,8 @@ function createItemHandler(e) {
       : null;
     console.log('checkedType:', checkedType);
     let date = document.getElementById('date').value.trim(); // 날짜
-    let price = +document.getElementById('price').value.trim(); // 가격
+    let price = +document.getElementById('price').value.trim().replace(',', ''); // 가격
+    console.log('price:', price);
     let content = document.getElementById('content').value.trim(); // 내용
     price = checkedType === '지출' ? -price : price;
     return { date, price, content };
@@ -93,34 +124,38 @@ function createItemSubmitHandler(e) {
   e.preventDefault();
 }
 
-/**
- *
- * @param {*} item
- */
 function createLi({ id, date, price, content }) {
-  console.log('id, price:', price);
   let $li = document.createElement('li');
   $li.id = id;
-  $li.className = 'flex w-full overflow-hidden h-12 py-1 transition';
-  $li.onclick = (e) => console.log('Clicked:', id);
+  $li.className =
+    'flex w-full overflow-hidden h-14 py-1 rounded-md transition duration-75 hover:bg-gray-50';
+  $li.onclick = function deleteLi() {
+    let deleteId = id;
+    let transaction = db.transaction(OBJECT_STORE, 'readwrite');
+    let objectStore = transaction.objectStore(OBJECT_STORE);
+    let request = objectStore.delete(deleteId);
+    request.onsuccess = () => loadItems();
+    request.onerror = () =>
+      console.error('Error deleting item:', request.error);
+  };
   $li.innerHTML = `
     <div class="flex flex-col w-full truncate">
-      <span class="text-xs text-gray-400">${date}</span>
-      <span class="truncate text-gray-700">${content}</span>
+      <span class="text-xs text-gray-300">${date}</span>
+      <span class="flex items-center truncate text-gray-600 h-full">${content}</span>
     </div>
     <div class="flex justify-end items-center w-28">
       <span class="text-sm ${
-        price >= 0 ? 'text-sky-500' : 'text-red-500'
-      }">${price}</span>
+        price >= 0
+          ? price === 0
+            ? 'text-gray-700'
+            : 'text-sky-400'
+          : 'text-red-400'
+      }">${new Intl.NumberFormat().format(price < 0 ? -price : price)}</span>
     </div>
   `;
   return $li;
 }
 
-/**
- *
- * @returns
- */
 function loadItems() {
   const $itemList = document.getElementById('itemList');
   while ($itemList.firstChild) $itemList.firstChild.remove();
@@ -136,5 +171,5 @@ function loadItems() {
       cursor.continue();
     }
   };
-  return;
+  setTotalPrice();
 }
