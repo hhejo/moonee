@@ -102,9 +102,9 @@ function getEnteredItem() {
     ? $selectedOption.nextElementSibling.textContent.trim()
     : null;
   let date = document.getElementById('date').value.trim(); // 날짜
-  let price = +document.getElementById('price').value.trim().replace(',', ''); // 가격
+  let price = document.getElementById('price').value.trim().replaceAll(',', ''); // 가격
   let content = document.getElementById('content').value.trim(); // 내용
-  price = checkedType === '지출' ? -price : price;
+  price = checkedType === '지출' ? -+price : +price;
   return { date, price, content };
 }
 
