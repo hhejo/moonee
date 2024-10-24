@@ -76,7 +76,7 @@ let $createItemForm = /*html*/ `
 `;
 $createItemFormSection.innerHTML = $createItemForm;
 
-function hideCreateItemFormHandler() {
+export function hideCreateItemFormHandler() {
   document.getElementById('date').value = '';
   document.getElementById('price').value = '';
   document.getElementById('content').value = '';

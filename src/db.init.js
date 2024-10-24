@@ -11,7 +11,6 @@ function openDatabase() {
   openRequest.onsuccess = (e) => {
     db = e.target.result;
     console.log('Database opened successfully!', db);
-    // loadItems();
     let dbOpenEvent = new CustomEvent('db-opened', { detail: { db } });
     document.dispatchEvent(dbOpenEvent);
   };

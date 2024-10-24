@@ -1,57 +1,30 @@
 import { db, OBJECT_STORE } from './db.init.js';
 import { getAllItemsFromDB } from './db.controller.js';
-import './header.js';
+import { setTotalPrice } from './header.js';
+import { hideCreateItemFormHandler } from './create-form.js';
 import './create-form-btn.js';
-import './create-form.js';
 
 document.addEventListener('db-opened', async (e) => {
-  // let db = e.detail.db;
   console.log('Database opened event received:', db);
   let items = await getAllItemsFromDB();
   printItems(items);
+  setTotalPrice(items);
 });
 
-document.addEventListener('', (e) => {});
-
-function setTotalPrice(items) {
-  let [totalIncome, totalExpense, total] = [0, 0, 0];
-  for (let { price } of items) {
-    total += price;
-    if (price >= 0) totalIncome += price;
-    else totalExpense += price;
-  }
-
-  let formatComma = (val) => new Intl.NumberFormat().format(val);
-  let $total = document.getElementById('total');
-  $total.textContent = formatComma(Math.abs(total));
-  document.getElementById('totalIncome').textContent = formatComma(
-    Math.abs(totalIncome)
-  );
-  document.getElementById('totalExpense').textContent = formatComma(
-    Math.abs(totalExpense)
-  );
-
-  if (total > 0) {
-    $total.classList.remove('text-gray-500', 'text-red-500');
-    $total.classList.add('text-sky-500');
-  } else if (total < 0) {
-    $total.classList.remove('text-gray-500', 'text-sky-500');
-    $total.classList.add('text-red-500');
-  } else {
-    $total.classList.remove('text-sky-500', 'text-red-500');
-    $total.classList.add('text-gray-500');
-  }
-}
+document.addEventListener('item-added', async (e) => {
+  let { item } = e.detail;
+  await addItemToDB(item);
+  let items = await getAllItemsFromDB();
+  printItems(items);
+  setTotalPrice(items);
+});
 
 function addItemToDB(item) {
   return new Promise((resolve, reject) => {
     let transaction = db.transaction(OBJECT_STORE, 'readwrite');
     let objectStore = transaction.objectStore(OBJECT_STORE);
     let request = objectStore.add(item);
-    request.onsuccess = () => {
-      printItems();
-      resolve();
-    };
+    request.onsuccess = () => resolve();
     request.onerror = (e) => console.error('Error adding item:', request.error);
   });
 }
@@ -72,7 +45,8 @@ async function createItemHandler(e) {
     return { date, price, content };
   })(); // 아이템
   if (!item.date || !item.content) return;
-  await addItemToDB(item);
+  let itemAddEvent = new CustomEvent('item-added', { detail: { item } });
+  document.dispatchEvent(itemAddEvent);
   hideCreateItemFormHandler();
 }
 window.createItemHandler = createItemHandler;
@@ -105,7 +79,7 @@ function createItemLiElement({ id, date, price, content }) {
       <span class="text-sm ${
         price >= 0
           ? price === 0
-            ? 'text-gray-700'
+            ? 'text-gray-400'
             : 'text-sky-400'
           : 'text-red-400'
       }">${new Intl.NumberFormat().format(price < 0 ? -price : price)}</span>
@@ -121,5 +95,4 @@ function printItems(items) {
     let $li = createItemLiElement(item);
     $itemList.appendChild($li);
   }
-  setTotalPrice(items);
 }

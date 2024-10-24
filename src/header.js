@@ -20,3 +20,33 @@ $headerDiv.innerHTML = /*html*/ `
     </div>
   </header>
 `;
+
+export function setTotalPrice(items) {
+  let [totalIncome, totalExpense, total] = [0, 0, 0];
+  for (let { price } of items) {
+    total += price;
+    if (price >= 0) totalIncome += price;
+    else totalExpense += price;
+  }
+
+  let formatComma = (val) => new Intl.NumberFormat().format(val);
+  let $total = document.getElementById('total');
+  $total.textContent = formatComma(Math.abs(total));
+  document.getElementById('totalIncome').textContent = formatComma(
+    Math.abs(totalIncome)
+  );
+  document.getElementById('totalExpense').textContent = formatComma(
+    Math.abs(totalExpense)
+  );
+
+  if (total > 0) {
+    $total.classList.remove('text-gray-500', 'text-red-500');
+    $total.classList.add('text-sky-500');
+  } else if (total < 0) {
+    $total.classList.remove('text-gray-500', 'text-sky-500');
+    $total.classList.add('text-red-500');
+  } else {
+    $total.classList.remove('text-sky-500', 'text-red-500');
+    $total.classList.add('text-gray-500');
+  }
+}
