@@ -1,11 +1,15 @@
-import { db, OBJECT_STORE } from './db.init.js';
-import { getAllItemsFromDB } from './db.controller.js';
+import './db.init.js';
+import {
+  getAllItemsFromDB,
+  addItemToDB,
+  deleteItemFromDB,
+} from './db.controller.js';
 import { setTotalPrice } from './header.js';
 import { hideCreateItemFormHandler } from './create-form.js';
 import './create-form-btn.js';
+import { printItems } from './item.js';
 
-document.addEventListener('db-opened', async (e) => {
-  console.log('Database opened event received:', db);
+document.addEventListener('db-opened', async () => {
   let items = await getAllItemsFromDB();
   printItems(items);
   setTotalPrice(items);
@@ -19,15 +23,13 @@ document.addEventListener('item-added', async (e) => {
   setTotalPrice(items);
 });
 
-function addItemToDB(item) {
-  return new Promise((resolve, reject) => {
-    let transaction = db.transaction(OBJECT_STORE, 'readwrite');
-    let objectStore = transaction.objectStore(OBJECT_STORE);
-    let request = objectStore.add(item);
-    request.onsuccess = () => resolve();
-    request.onerror = (e) => console.error('Error adding item:', request.error);
-  });
-}
+document.addEventListener('item-deleted', async (e) => {
+  let { id } = e.detail;
+  await deleteItemFromDB(id);
+  let items = await getAllItemsFromDB();
+  printItems(items);
+  setTotalPrice(items);
+});
 
 async function createItemHandler(e) {
   e.preventDefault();
@@ -55,44 +57,3 @@ function createItemSubmitHandler(e) {
   e.preventDefault();
 }
 window.createItemSubmitHandler = createItemSubmitHandler;
-
-function createItemLiElement({ id, date, price, content }) {
-  let $li = document.createElement('li');
-  $li.id = id;
-  $li.className =
-    'flex w-full overflow-hidden h-14 py-1 rounded-md transition duration-75 hover:bg-gray-50';
-  $li.onclick = function deleteLi() {
-    let deleteId = id;
-    let transaction = db.transaction(OBJECT_STORE, 'readwrite');
-    let objectStore = transaction.objectStore(OBJECT_STORE);
-    let request = objectStore.delete(deleteId);
-    request.onsuccess = () => loadItems();
-    request.onerror = () =>
-      console.error('Error deleting item:', request.error);
-  };
-  $li.innerHTML = `
-    <div class="flex flex-col w-full truncate">
-      <span class="text-xs text-gray-300">${date}</span>
-      <span class="flex items-center truncate text-gray-600 h-full">${content}</span>
-    </div>
-    <div class="flex justify-end items-center w-28">
-      <span class="text-sm ${
-        price >= 0
-          ? price === 0
-            ? 'text-gray-400'
-            : 'text-sky-400'
-          : 'text-red-400'
-      }">${new Intl.NumberFormat().format(price < 0 ? -price : price)}</span>
-    </div>
-  `;
-  return $li;
-}
-
-function printItems(items) {
-  const $itemList = document.getElementById('itemList');
-  while ($itemList.firstChild) $itemList.firstChild.remove();
-  for (let item of items) {
-    let $li = createItemLiElement(item);
-    $itemList.appendChild($li);
-  }
-}
