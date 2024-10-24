@@ -1,20 +1,14 @@
-let db; // DB
-let DB = 'accountBook';
-let OBJECT_STORE = 'items';
+let [db, DB, OBJECT_STORE] = [null, 'accountBook', 'items'];
 
 function openDatabase() {
   let openRequest = indexedDB.open(DB, 1);
-
   openRequest.onerror = (e) =>
     console.error('Database error:', e.target.errorCode);
-
   openRequest.onsuccess = (e) => {
     db = e.target.result;
-    console.log('Database opened successfully!', db);
     let dbOpenEvent = new CustomEvent('db-opened', { detail: { db } });
     document.dispatchEvent(dbOpenEvent);
   };
-
   openRequest.onupgradeneeded = (e) => {
     db = e.target.result;
     if (!db.objectStoreNames.contains(OBJECT_STORE)) {
@@ -23,7 +17,6 @@ function openDatabase() {
       objectStore.createIndex('date', 'date');
       objectStore.createIndex('content', 'content');
       objectStore.createIndex('price', 'price');
-      console.log('Database - items created');
     }
   };
 }

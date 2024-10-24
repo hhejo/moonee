@@ -23,7 +23,7 @@ export function addItemToDB(item) {
     let objectStore = transaction.objectStore(OBJECT_STORE);
     let request = objectStore.add(item);
     request.onsuccess = () => resolve();
-    request.onerror = (e) => console.error('Error adding item:', request.error);
+    request.onerror = (e) => console.error('Add error:', request.error);
   });
 }
 
@@ -33,7 +33,6 @@ export function deleteItemFromDB(id) {
     let objectStore = transaction.objectStore(OBJECT_STORE);
     let request = objectStore.delete(id);
     request.onsuccess = () => resolve();
-    request.onerror = (e) =>
-      console.error('Error deleting item:', request.error);
+    request.onerror = (e) => console.error('Delete error:', request.error);
   });
 }

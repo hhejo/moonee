@@ -5,7 +5,7 @@ import {
   deleteItemFromDB,
 } from './db.controller.js';
 import { setTotalPrice } from './header.js';
-import { hideCreateItemFormHandler } from './create-form.js';
+import './create-form.js';
 import './create-form-btn.js';
 import { printItems } from './item.js';
 

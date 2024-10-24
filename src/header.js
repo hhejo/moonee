@@ -28,17 +28,12 @@ export function setTotalPrice(items) {
     if (price >= 0) totalIncome += price;
     else totalExpense += price;
   }
-
-  let formatComma = (val) => new Intl.NumberFormat().format(val);
+  [totalIncome, totalExpense] = [totalIncome, totalExpense].map(Math.abs);
+  let setComma = (val) => new Intl.NumberFormat().format(val);
   let $total = document.getElementById('total');
-  $total.textContent = formatComma(Math.abs(total));
-  document.getElementById('totalIncome').textContent = formatComma(
-    Math.abs(totalIncome)
-  );
-  document.getElementById('totalExpense').textContent = formatComma(
-    Math.abs(totalExpense)
-  );
-
+  $total.textContent = setComma(Math.abs(total));
+  document.getElementById('totalIncome').textContent = setComma(totalIncome);
+  document.getElementById('totalExpense').textContent = setComma(totalExpense);
   if (total > 0) {
     $total.classList.remove('text-gray-500', 'text-red-500');
     $total.classList.add('text-sky-500');
