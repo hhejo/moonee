@@ -10,31 +10,31 @@
     <!-- header -->
     <header class="flex flex-col justify-center items-center mb-4">
       <h1 class="w-full text-3xl text-gray-700 border-b">MooNee</h1>
-      <div class="flex flex-col justify-center items-center w-full h-24">
-        <span class="text-lg text-gray-600">이번 달의 거래 내역</span>
-        <span class="text-4xl text-sky-500">289300</span>
+      <div class="flex flex-col justify-center items-center w-full h-40">
+        <span class="text-lg text-gray-500 mb-2">이번 달의 거래 내역</span>
+        <span id="total" class="text-5xl"></span>
       </div>
-      <div class="flex w-full rounded-md border border-gray-200">
-        <div class="flex flex-col justify-center items-center w-full h-20">
-          <span class="text-sm text-gray-600">수입</span>
-          <span class="text-xl text-sky-500">924,000</span>
+      <div class="flex w-full rounded-md border border-gray-200 h-28">
+        <div class="flex flex-col justify-center items-center w-full">
+          <span class="text-sm text-gray-500 mb-2">수입</span>
+          <span id="totalIncome" class="text-2xl text-sky-500"></span>
         </div>
-        <div class="flex flex-col justify-center items-center w-full h-20">
-          <span class="text-sm text-gray-600">수출</span>
-          <span class="text-xl text-red-500">634,700</span>
+        <div class="flex flex-col justify-center items-center w-full">
+          <span class="text-sm text-gray-500 mb-2">지출</span>
+          <span id="totalExpense" class="text-2xl text-red-500"></span>
         </div>
       </div>
     </header>
 
-    <main class="flex flex-col justify-center items-center gap-1">
+    <main class="flex flex-col justify-center items-center">
       <!-- 추가 버튼 -->
-      <section class="w-full">
+      <section class="w-full border-b border-gray-300">
         <button
           id="createItemFormButton"
-          class="flex justify-center items-center rounded-md border border-gray-200 h-20 w-full"
+          class="flex justify-center items-center rounded-md bg-gray-600 text-gray-50 h-20 w-full"
           onclick="displayCreateItemFormHandler(event)"
         >
-          <span class="text-gray-500">새 거래 내역을 추가하세요</span>
+          새로운 거래 내역을 추가하세요
         </button>
       </section>
 
@@ -43,15 +43,15 @@
         <form
           id="createItemForm"
           onsubmit="createItemSubmitHandler(event)"
-          class="flex flex-col justify-center items-center gap-3 transition-opacity opacity-0 hidden"
+          class="flex flex-col justify-center items-center mt-6 gap-3 transition-opacity opacity-0 hidden"
         >
-          <h2 class="text-lg mb-2">새 거래 내역 생성</h2>
+          <h2 class="w-full text-lg mb-2">거래 내역 추가</h2>
           <!-- 수입 | 지출 버튼 -->
           <div class="w-full flex gap-2 h-11">
             <label class="w-1/2">
               <input type="radio" name="option" class="hidden peer" />
               <div
-                class="flex justify-center items-center h-full cursor-pointer text-sm border border-sky-400 text-sky-500 rounded-md peer-checked:bg-sky-200 peer-checked:text-white transition-colors"
+                class="flex justify-center items-center h-full cursor-pointer text-sm border border-sky-400 text-sky-500 rounded-md peer-checked:bg-sky-300 peer-checked:text-white transition-colors duration-75"
               >
                 수입
               </div>
@@ -59,7 +59,7 @@
             <label class="w-1/2">
               <input type="radio" name="option" class="hidden peer" checked />
               <div
-                class="flex justify-center items-center h-full cursor-pointer text-sm border border-red-400 text-red-500 rounded-md peer-checked:bg-red-200 peer-checked:text-white transition-colors"
+                class="flex justify-center items-center h-full cursor-pointer text-sm border border-red-400 text-red-500 rounded-md peer-checked:bg-red-300 peer-checked:text-white transition-colors duration-75"
               >
                 지출
               </div>
@@ -81,8 +81,10 @@
             <input
               id="price"
               name="price"
-              type="number"
+              type="text"
               class="w-full text-gray-800 p-1.5 outline-none border-b-2 border-gray-100 focus:border-b-gray-800 transition"
+              value="0"
+              oninput="formatPriceHandler(this)"
             />
           </div>
           <!-- 내용 -->
@@ -114,7 +116,7 @@
       </section>
 
       <!-- 전체 | 수입 | 지출 필터 버튼 -->
-      <section class="w-full">
+      <section class="w-full pt-5 my-5 border-t">
         <h2 class="text-xl text-gray-500">
           전체 &nbsp;&nbsp; 수입 &nbsp;&nbsp; 지출
         </h2>
