@@ -127,8 +127,17 @@ function createItemSubmitHandler(e) {
 function createLi({ id, date, price, content }) {
   let $li = document.createElement('li');
   $li.id = id;
-  $li.className = 'flex w-full overflow-hidden h-14 py-1 transition';
-  $li.onclick = (e) => console.log('Clicked:', id);
+  $li.className =
+    'flex w-full overflow-hidden h-14 py-1 rounded-md transition duration-75 hover:bg-gray-50';
+  $li.onclick = function deleteLi() {
+    let deleteId = id;
+    let transaction = db.transaction(OBJECT_STORE, 'readwrite');
+    let objectStore = transaction.objectStore(OBJECT_STORE);
+    let request = objectStore.delete(deleteId);
+    request.onsuccess = () => loadItems();
+    request.onerror = () =>
+      console.error('Error deleting item:', request.error);
+  };
   $li.innerHTML = `
     <div class="flex flex-col w-full truncate">
       <span class="text-xs text-gray-300">${date}</span>
