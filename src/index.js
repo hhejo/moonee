@@ -1,28 +1,10 @@
-let db; // DB
-let [DB, OBJECT_STORE] = ['accountBook', 'items']; // DB 이름, ObjectStore 이름
+import { db, OBJECT_STORE } from './db.js';
 
-function openDatabase() {
-  let openRequest = indexedDB.open(DB, 1);
-  openRequest.onerror = (e) =>
-    console.error('Database error:', e.target.errorCode);
-  openRequest.onsuccess = (e) => {
-    db = e.target.result;
-    console.log('Database opened successfully!', db);
-    loadItems();
-  };
-  openRequest.onupgradeneeded = (e) => {
-    db = e.target.result;
-    if (!db.objectStoreNames.contains(OBJECT_STORE)) {
-      let keyOptions = { keyPath: 'id', autoIncrement: true };
-      let objectStore = db.createObjectStore(OBJECT_STORE, keyOptions);
-      objectStore.createIndex('date', 'date');
-      objectStore.createIndex('content', 'content');
-      objectStore.createIndex('price', 'price');
-      console.log('Database - items created');
-    }
-  };
-}
-openDatabase();
+document.addEventListener('db-opened', (e) => {
+  // let db = e.detail.db;
+  console.log('Database opened event received:', db);
+  loadItems();
+});
 
 function displayCreateItemFormHandler() {
   document.getElementById('createItemForm').classList.remove('hidden');
