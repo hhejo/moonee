@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <link rel="stylesheet" href="/src/style.css" />
+    <title>MooNee</title>
+  </head>
+  <body class="flex flex-col justify-center px-5">
+    <!-- 헤더 -->
+    <div id="headerDiv"></div>
+
+    <!-- 메인 -->
+    <main class="flex flex-col justify-center items-center">
+      <!-- 거래 내역 추가 버튼 -->
+      <section
+        id="createItemFormBtnSection"
+        class="w-full border-b border-gray-300"
+      ></section>
+
+      <!-- 거래 내역 추가 폼 -->
+      <section id="createItemFormSection" class="w-full"></section>
+
+      <!-- 전체 | 수입 | 지출 필터 버튼 -->
+      <section class="w-full pt-5 my-5 border-t">
+        <button
+          id="allFilterBtn"
+          onclick="clickFilterBtnHandler(event)"
+          class="transition duration-75 text-xl text-gray-700 mr-4 border-b-2 border-gray-700"
+        >
+          전체
+        </button>
+        <button
+          id="incomeFilterBtn"
+          onclick="clickFilterBtnHandler(event)"
+          class="transition duration-75 text-xl text-gray-300 mr-4"
+        >
+          수입
+        </button>
+        <button
+          id="expenseFilterBtn"
+          onclick="clickFilterBtnHandler(event)"
+          class="transition duration-75 text-xl text-gray-300"
+        >
+          지출
+        </button>
+      </section>
+
+      <!-- 아이템 리스트 -->
+      <section class="w-full">
+        <ul id="itemList" class="w-full"></ul>
+      </section>
+    </main>
+
+    <script type="module" src="src/index.js"></script>
+  </body>
+</html>
