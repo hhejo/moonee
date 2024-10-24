@@ -1,12 +1,14 @@
-import { db, OBJECT_STORE } from './db.js';
+import { db, OBJECT_STORE } from './db.init.js';
+import { getAllItemsFromDB } from './db.controller.js';
 import './header.js';
 import './create-form-btn.js';
 import './create-form.js';
 
-document.addEventListener('db-opened', (e) => {
+document.addEventListener('db-opened', async (e) => {
   // let db = e.detail.db;
   console.log('Database opened event received:', db);
-  printItems();
+  let items = await getAllItemsFromDB();
+  printItems(items);
 });
 
 document.addEventListener('', (e) => {});
@@ -112,27 +114,9 @@ function createItemLiElement({ id, date, price, content }) {
   return $li;
 }
 
-function getAllItemsFromDB() {
-  return new Promise((resolve, reject) => {
-    let items = [];
-    let transaction = db.transaction(OBJECT_STORE, 'readonly');
-    let objectStore = transaction.objectStore(OBJECT_STORE);
-    let cursorRequest = objectStore.openCursor(null, 'prev');
-    cursorRequest.onsuccess = (e) => {
-      let cursor = e.target.result;
-      if (cursor) {
-        items.push(cursor.value);
-        cursor.continue();
-      } else resolve(items);
-    };
-    cursorRequest.onerror = (e) => reject(e);
-  });
-}
-
-async function printItems() {
+function printItems(items) {
   const $itemList = document.getElementById('itemList');
   while ($itemList.firstChild) $itemList.firstChild.remove();
-  let items = await getAllItemsFromDB();
   for (let item of items) {
     let $li = createItemLiElement(item);
     $itemList.appendChild($li);
