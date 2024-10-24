@@ -5,7 +5,7 @@ let $createItemForm = /*html*/ `
     onsubmit="createItemSubmitHandler(event)"
     class="flex flex-col justify-center items-center mt-6 gap-3 transition-opacity opacity-0 hidden"
   >
-    <h2 class="w-full text-lg mb-2">거래 내역 추가</h2>
+    <h2 class="w-full text-lg text-gray-700 mb-2">거래 내역 추가</h2>
     <!-- 수입 | 지출 버튼 -->
     <div class="w-full flex gap-2 h-11">
       <label class="w-1/2">

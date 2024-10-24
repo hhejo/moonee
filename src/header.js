@@ -30,7 +30,8 @@ $headerDiv.innerHTML = /*html*/ `
 
 export function setTotalPrice(items) {
   let [totalIncome, totalExpense, total] = [0, 0, 0];
-  for (let { price } of items) {
+  for (let { id, price } of items) {
+    if (id === -1) continue;
     total += price;
     if (price >= 0) totalIncome += price;
     else totalExpense += price;

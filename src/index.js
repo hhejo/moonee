@@ -37,9 +37,21 @@ document.addEventListener('item-filtered', async (e) => {
   let items = await getAllItemsFromDB();
   let filteredItems = [];
   if (btnType === '수입') {
-    for (let item of items) if (item.price > 0) filteredItems.push(item);
+    for (let item of items) {
+      // if (item.id === -1) {
+      //   filteredItems.push(item);
+      //   continue;
+      // }
+      if (item.price > 0) filteredItems.push(item);
+    }
   } else if (btnType === '지출') {
-    for (let item of items) if (item.price < 0) filteredItems.push(item);
+    for (let item of items) {
+      // if (item.id === -1) {
+      //   filteredItems.push(item);
+      //   continue;
+      // }
+      if (item.price < 0) filteredItems.push(item);
+    }
   } else filteredItems = items;
   printItems(filteredItems);
   setTotalPrice(items);

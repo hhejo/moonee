@@ -2,15 +2,20 @@ import { db, OBJECT_STORE } from './db.init';
 
 export function getAllItemsFromDB() {
   return new Promise((resolve, reject) => {
-    let items = [];
     let transaction = db.transaction(OBJECT_STORE, 'readonly');
     let objectStore = transaction.objectStore(OBJECT_STORE);
     let index = objectStore.index('date');
     let cursorRequest = index.openCursor(null, 'prev');
+    let items = [];
+    let prevDate = '';
     cursorRequest.onsuccess = (e) => {
       let cursor = e.target.result;
       if (cursor) {
-        items.push(cursor.value);
+        let item = cursor.value;
+        if (prevDate !== item.date)
+          items.push({ date: item.date, price: '', content: '', id: -1 });
+        items.push(item);
+        prevDate = item.date;
         cursor.continue();
       } else resolve(items);
     };
