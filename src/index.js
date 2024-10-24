@@ -6,76 +6,71 @@ import './create-form.js';
 document.addEventListener('db-opened', (e) => {
   // let db = e.detail.db;
   console.log('Database opened event received:', db);
-  loadItems();
+  printItems();
 });
 
-function setTotalPrice() {
-  let transaction = db.transaction(OBJECT_STORE, 'readonly');
-  let objectStore = transaction.objectStore(OBJECT_STORE);
-  let cursorRequest = objectStore.openCursor();
+document.addEventListener('', (e) => {});
+
+function setTotalPrice(items) {
   let [totalIncome, totalExpense, total] = [0, 0, 0];
-  cursorRequest.onsuccess = (e) => {
-    let cursor = e.target.result;
-    if (cursor) {
-      let { price } = cursor.value;
-      if (price >= 0) totalIncome += price;
-      else totalExpense += price;
-      total += price;
-      cursor.continue();
-    }
-    let $totalIncome = document.getElementById('totalIncome');
-    $totalIncome.textContent = new Intl.NumberFormat().format(
-      totalIncome < 0 ? -totalIncome : totalIncome
-    );
-    let $totalExpense = document.getElementById('totalExpense');
-    $totalExpense.textContent = new Intl.NumberFormat().format(
-      totalExpense < 0 ? -totalExpense : totalExpense
-    );
-    let $total = document.getElementById('total');
-    $total.textContent = new Intl.NumberFormat().format(
-      total < 0 ? -total : total
-    );
-    if (total > 0) {
-      $total.classList.remove(...['text-gray-500', 'text-red-500']);
-      $total.classList.add('text-sky-500');
-    } else if (total < 0) {
-      $total.classList.remove(...['text-gray-500', 'text-sky-500']);
-      $total.classList.add('text-red-500');
-    } else {
-      $total.classList.remove(...['text-sky-500', 'text-red-500']);
-      $total.classList.add('text-gray-500');
-    }
-  };
+  for (let { price } of items) {
+    total += price;
+    if (price >= 0) totalIncome += price;
+    else totalExpense += price;
+  }
+
+  let formatComma = (val) => new Intl.NumberFormat().format(val);
+  let $total = document.getElementById('total');
+  $total.textContent = formatComma(Math.abs(total));
+  document.getElementById('totalIncome').textContent = formatComma(
+    Math.abs(totalIncome)
+  );
+  document.getElementById('totalExpense').textContent = formatComma(
+    Math.abs(totalExpense)
+  );
+
+  if (total > 0) {
+    $total.classList.remove('text-gray-500', 'text-red-500');
+    $total.classList.add('text-sky-500');
+  } else if (total < 0) {
+    $total.classList.remove('text-gray-500', 'text-sky-500');
+    $total.classList.add('text-red-500');
+  } else {
+    $total.classList.remove('text-sky-500', 'text-red-500');
+    $total.classList.add('text-gray-500');
+  }
 }
 
 function addItemToDB(item) {
-  let transaction = db.transaction(OBJECT_STORE, 'readwrite');
-  let objectStore = transaction.objectStore(OBJECT_STORE);
-  let request = objectStore.add(item);
-  request.onsuccess = (e) => loadItems();
-  request.onerror = (e) => console.error('Error adding item:', request.error);
+  return new Promise((resolve, reject) => {
+    let transaction = db.transaction(OBJECT_STORE, 'readwrite');
+    let objectStore = transaction.objectStore(OBJECT_STORE);
+    let request = objectStore.add(item);
+    request.onsuccess = () => {
+      printItems();
+      resolve();
+    };
+    request.onerror = (e) => console.error('Error adding item:', request.error);
+  });
 }
 
-function createItemHandler(e) {
+async function createItemHandler(e) {
   e.preventDefault();
   let item = (() => {
     let $selectedOption = document.querySelector(
       'input[name="option"]:checked'
     );
-    console.log('selectedOption', $selectedOption);
     let checkedType = $selectedOption
       ? $selectedOption.nextElementSibling.textContent.trim()
       : null;
-    console.log('checkedType:', checkedType);
     let date = document.getElementById('date').value.trim(); // 날짜
     let price = +document.getElementById('price').value.trim().replace(',', ''); // 가격
-    console.log('price:', price);
     let content = document.getElementById('content').value.trim(); // 내용
     price = checkedType === '지출' ? -price : price;
     return { date, price, content };
   })(); // 아이템
   if (!item.date || !item.content) return;
-  addItemToDB(item);
+  await addItemToDB(item);
   hideCreateItemFormHandler();
 }
 window.createItemHandler = createItemHandler;
@@ -85,7 +80,7 @@ function createItemSubmitHandler(e) {
 }
 window.createItemSubmitHandler = createItemSubmitHandler;
 
-function createLi({ id, date, price, content }) {
+function createItemLiElement({ id, date, price, content }) {
   let $li = document.createElement('li');
   $li.id = id;
   $li.className =
@@ -117,20 +112,30 @@ function createLi({ id, date, price, content }) {
   return $li;
 }
 
-function loadItems() {
+function getAllItemsFromDB() {
+  return new Promise((resolve, reject) => {
+    let items = [];
+    let transaction = db.transaction(OBJECT_STORE, 'readonly');
+    let objectStore = transaction.objectStore(OBJECT_STORE);
+    let cursorRequest = objectStore.openCursor(null, 'prev');
+    cursorRequest.onsuccess = (e) => {
+      let cursor = e.target.result;
+      if (cursor) {
+        items.push(cursor.value);
+        cursor.continue();
+      } else resolve(items);
+    };
+    cursorRequest.onerror = (e) => reject(e);
+  });
+}
+
+async function printItems() {
   const $itemList = document.getElementById('itemList');
   while ($itemList.firstChild) $itemList.firstChild.remove();
-  let transaction = db.transaction(OBJECT_STORE, 'readonly');
-  let objectStore = transaction.objectStore(OBJECT_STORE);
-  let cursorRequest = objectStore.openCursor(null, 'prev');
-  cursorRequest.onsuccess = (e) => {
-    let cursor = e.target.result;
-    if (cursor) {
-      let item = cursor.value;
-      let $li = createLi(item);
-      $itemList.appendChild($li);
-      cursor.continue();
-    }
-  };
-  setTotalPrice();
+  let items = await getAllItemsFromDB();
+  for (let item of items) {
+    let $li = createItemLiElement(item);
+    $itemList.appendChild($li);
+  }
+  setTotalPrice(items);
 }
