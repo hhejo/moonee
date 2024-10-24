@@ -24,9 +24,27 @@
 
       <!-- 전체 | 수입 | 지출 필터 버튼 -->
       <section class="w-full pt-5 my-5 border-t">
-        <h2 class="text-xl text-gray-500">
-          전체 &nbsp;&nbsp; 수입 &nbsp;&nbsp; 지출
-        </h2>
+        <button
+          id="allFilterBtn"
+          onclick="clickFilterBtnHandler(event)"
+          class="transition duration-75 text-xl text-gray-700 mr-4 border-b-2 border-gray-700"
+        >
+          전체
+        </button>
+        <button
+          id="incomeFilterBtn"
+          onclick="clickFilterBtnHandler(event)"
+          class="transition duration-75 text-xl text-gray-300 mr-4"
+        >
+          수입
+        </button>
+        <button
+          id="expenseFilterBtn"
+          onclick="clickFilterBtnHandler(event)"
+          class="transition duration-75 text-xl text-gray-300"
+        >
+          지출
+        </button>
       </section>
 
       <!-- 아이템 리스트 -->
