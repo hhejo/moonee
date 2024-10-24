@@ -1,15 +1,6 @@
 function deleteItemHandler(id) {
-  console.log(id);
   let itemDeleteEvent = new CustomEvent('item-deleted', { detail: { id } });
   document.dispatchEvent(itemDeleteEvent);
-  return;
-  let deleteId = id;
-  let transaction = db.transaction(OBJECT_STORE, 'readwrite');
-  let objectStore = transaction.objectStore(OBJECT_STORE);
-  let request = objectStore.delete(deleteId);
-  request.onsuccess = () => {};
-  // request.onsuccess = () => loadItems();
-  request.onerror = () => console.error('Error deleting item:', request.error);
 }
 
 export function createItemLiElement({ id, date, price, content }) {
@@ -18,15 +9,6 @@ export function createItemLiElement({ id, date, price, content }) {
   $li.className =
     'flex w-full overflow-hidden h-14 py-1 rounded-md transition duration-75 hover:bg-gray-50';
   $li.onclick = () => deleteItemHandler(id);
-  // $li.onclick = function deleteLi() {
-  //   let deleteId = id;
-  //   let transaction = db.transaction(OBJECT_STORE, 'readwrite');
-  //   let objectStore = transaction.objectStore(OBJECT_STORE);
-  //   let request = objectStore.delete(deleteId);
-  //   // request.onsuccess = () => loadItems();
-  //   request.onerror = () =>
-  //     console.error('Error deleting item:', request.error);
-  // };
   $li.innerHTML = `
     <div class="flex flex-col w-full truncate">
       <span class="text-xs text-gray-300">${date}</span>
