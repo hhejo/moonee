@@ -1,4 +1,4 @@
-import { db, OBJECT_STORE } from './db-init';
+import { db, OBJECT_STORE } from './db.init.js';
 
 export function getAllItemsFromDB() {
   return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-import './db-init.js';
+import './db.init.js';
 import {
   getAllItemsFromDB,
   addItemToDB,
