@@ -9,6 +9,7 @@ import './create-form.js';
 import './create-form-btn.js';
 import { printItems } from './item.js';
 import { getFilteredItems } from './filter.js';
+import { exportToCSV } from './csv.js';
 
 // DB 연결
 document.addEventListener('db-opened', async () => {
@@ -42,4 +43,10 @@ document.addEventListener('item-filtered', async (e) => {
   let filteredItems = getFilteredItems(btnType, items);
   printItems(filteredItems);
   setTotalPrice(items);
+});
+
+// CSV로 내보내기
+document.addEventListener('export-csv', async (e) => {
+  let items = await getAllItemsFromDB();
+  exportToCSV(items);
 });
