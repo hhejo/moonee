@@ -14,9 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clear workspace
-        run: git reset --hard
-
       - name: Checkout the repository
         uses: actions/checkout@v3
 
