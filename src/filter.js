@@ -72,3 +72,18 @@ function clickFilterBtnHandler(e) {
   }
 }
 window.clickFilterBtnHandler = clickFilterBtnHandler;
+
+export function getFilteredItems(btnType, items) {
+  if (btnType === '전체') return items;
+  let filteredItems = [];
+  for (let item of items) {
+    if (item.id === -1) {
+      if (filteredItems.at(-1)?.id === -1) filteredItems.pop();
+      filteredItems.push(item);
+      continue;
+    }
+    if (btnType === '수입' && item.price > 0) filteredItems.push(item);
+    else if (btnType === '지출' && item.price < 0) filteredItems.push(item);
+  }
+  return filteredItems;
+}
