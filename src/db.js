@@ -4,8 +4,10 @@ let OBJECT_STORE = 'items';
 
 function openDatabase() {
   let openRequest = indexedDB.open(DB, 1);
+
   openRequest.onerror = (e) =>
     console.error('Database error:', e.target.errorCode);
+
   openRequest.onsuccess = (e) => {
     db = e.target.result;
     console.log('Database opened successfully!', db);
@@ -13,6 +15,7 @@ function openDatabase() {
     let dbOpenEvent = new CustomEvent('db-opened', { detail: { db } });
     document.dispatchEvent(dbOpenEvent);
   };
+
   openRequest.onupgradeneeded = (e) => {
     db = e.target.result;
     if (!db.objectStoreNames.contains(OBJECT_STORE)) {
