@@ -73,6 +73,10 @@
 |    ![거래내역 목록](./assets/04-list.PNG)    |     ![수입 필터링](./assets/05-income.PNG)      |  ![지출 필터링](./assets/06-expense.PNG)  |
 | ![거래내역 내보내기](./assets/07-export.PNG) | ![거래내역 내보내기 2](./assets/08-export2.PNG) | ![거래내역 CSV 파일](./assets/09-csv.PNG) |
 
+시연 영상
+
+- `assets` 폴더 내
+
 ## 5. 아쉬웠던 부분
 
 - 거래내역 수정 기능을 추가하고 싶었지만 하지 못해 아쉬움
