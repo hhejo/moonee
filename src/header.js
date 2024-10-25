@@ -37,7 +37,10 @@ export function setTotalPrice(items) {
     else totalExpense += price;
   }
   [totalIncome, totalExpense] = [totalIncome, totalExpense].map(Math.abs);
-  let setComma = (val) => new Intl.NumberFormat().format(val);
+  let setComma = (val) =>
+    new Intl.NumberFormat('ko', { style: 'currency', currency: 'KRW' }).format(
+      val
+    );
   let $total = document.getElementById('total');
   $total.textContent = setComma(Math.abs(total));
   document.getElementById('totalIncome').textContent = setComma(totalIncome);
