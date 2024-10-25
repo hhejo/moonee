@@ -1,5 +1,4 @@
 function deleteItemHandler(id) {
-  return;
   let itemDeleteEvent = new CustomEvent('item-deleted', { detail: { id } });
   document.dispatchEvent(itemDeleteEvent);
 }
