@@ -1,4 +1,5 @@
 function deleteItemHandler(id) {
+  return;
   let itemDeleteEvent = new CustomEvent('item-deleted', { detail: { id } });
   document.dispatchEvent(itemDeleteEvent);
 }
@@ -23,7 +24,7 @@ export function createItemLiElement({ id, date, price, content }) {
       <span class="flex items-center truncate text-gray-600 h-full">${content}</span>
     </div>
     <div class="flex justify-end items-center w-28">
-      <span class="text-sm ${color}">${price}</span >
+      <span class="text-sm ${color}">${price}</span>
     </div>
   `;
   return $li;
