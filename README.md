@@ -31,6 +31,14 @@
 - 총 지출, 수입, 합계 조회
 - 모든 내역을 CSV 파일로 내보내기
 
+작업 기간
+
+- 2024/10, 1주
+
+인력 구성
+
+- 1인
+
 ## 2. 기술 스택
 
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"> <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"> <img src="https://img.shields.io/badge/Tailwindcss-06B6D4?style=for-the-badge&logo=Tailwindcss&logoColor=white">
