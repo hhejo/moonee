@@ -1,6 +1,10 @@
-# MooNee
+# 무니 (MooNee)
 
 ## 요약
+
+> indexedDB를 이용한 오프라인 가계부 웹 앱
+
+![무니 (MooNee)](./assets/000-moonee-main.png)
 
 ## 상세
 
@@ -18,11 +22,9 @@
 
 ## 1. 소개
 
-**[MooNee](https://hhejo.github.io/moonee/)**
+**[무니 (MooNee)](https://hhejo.github.io/moonee/)**
 
-주제
-
-- 오프라인 웹 애플리케이션
+- indexedDB를 이용한 오프라인 가계부 웹 앱
 - 간단하게 가계부를 작성하고 관리
 - 지출, 수입 항목을 작성하고 조회
 - 전체, 날짜별, 지출별, 수입별로 항목 조회
@@ -31,14 +33,7 @@
 
 ## 2. 기술 스택
 
-<!-- JavaScript -->
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black">
-
-<!-- Vite -->
-<img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white">
-
-<!-- TailwindCSS -->
-<img src="https://img.shields.io/badge/Tailwindcss-06B6D4?style=for-the-badge&logo=Tailwindcss&logoColor=white">
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"> <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"> <img src="https://img.shields.io/badge/Tailwindcss-06B6D4?style=for-the-badge&logo=Tailwindcss&logoColor=white">
 
 ## 3. 느낀 점
 
@@ -75,7 +70,7 @@
 
 시연 영상
 
-- `assets` 폴더 내
+- `assets` 폴더에 위치
 
 ## 5. 아쉬웠던 부분
 
@@ -88,7 +83,7 @@
 
 ## 6. 앞으로 학습할 것들, 나아갈 방향
 
-`React`를 사용해서 현재 프로젝트를 더 확장하고 싶고, 다른 사람이 사용하게 하면 좋겠음
+- `React`를 사용해서 현재 프로젝트를 더 확장하고 싶고, 다른 사람이 사용하게 하면 좋겠음
 
 ## 7. 어려웠던 부분, 해결한 과정
 
