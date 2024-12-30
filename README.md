@@ -20,7 +20,7 @@
 6. 앞으로 학습할 것들, 나아갈 방향
 7. 어려웠던 부분, 해결한 과정
 
-## 1. 소개
+### 1. 소개
 
 **[무니 (MooNee)](https://hhejo.github.io/moonee/)**
 
@@ -39,18 +39,18 @@
 
 - 1인
 
-## 2. 기술 스택
+### 2. 기술 스택
 
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"> <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"> <img src="https://img.shields.io/badge/Tailwindcss-06B6D4?style=for-the-badge&logo=Tailwindcss&logoColor=white">
 
-## 3. 느낀 점
+### 3. 느낀 점
 
 - indexedDB를 이용해 오프라인 웹 애플리케이션을 만들었다
 - localStore를 이용하는 것도 괜찮지만, 좀 더 관리되는 DB라서 기능이 누적될수록 좋을 것 같았다
 - JavaScript만으로는 늘어나는 코드를 관리하기가 아주 힘들었다
 - 커스텀 이벤트를 처음 사용해보니 그렇게 어렵지 않고 유용해서 나중에도 활용하고 싶다는 생각이 들었다
 
-## 4. 기능 (페이지 구성)
+### 4. 기능 (페이지 구성)
 
 1. 메인 페이지
    - 이번 달 총 수입, 지출의 합계 출력
@@ -80,7 +80,7 @@
 
 - `assets` 폴더에 위치
 
-## 5. 아쉬웠던 부분
+### 5. 아쉬웠던 부분
 
 - 거래내역 수정 기능을 추가하고 싶었지만 하지 못해 아쉬움
 - 로그인, 거래내역 동기화 기능을 추가하고 싶었음
@@ -89,23 +89,23 @@
 - 검색 기능
 - 태그, 메모 기능
 
-## 6. 앞으로 학습할 것들, 나아갈 방향
+### 6. 앞으로 학습할 것들, 나아갈 방향
 
 - `React`를 사용해서 현재 프로젝트를 더 확장하고 싶고, 다른 사람이 사용하게 하면 좋겠음
 
-## 7. 어려웠던 부분, 해결한 과정
+### 7. 어려웠던 부분, 해결한 과정
 
-### indexedDB
+indexedDB
 
 - 처음 사용해보는 웹 스토리지 기능이어서 검색, 문서 읽기를 통해 구현
 - 다른 DB와 기능은 비슷했지만, 좀 다른 점이 있었고(버전 등) 명칭이 달라 약간 낯설었음
 
-### CSS, TailwindCSS
+CSS, TailwindCSS
 
 - Flex 자식 요소들이 너비를 갖지 않아 헤매다가, 부모 요소, 자식 요소에 `w-full` 클래스를 주어 해결
 - 거래내역 생성 폼에서 수입·지출 버튼을 라디오 버튼으로 만드는 중에 라디오 버튼을 꾸미기 힘들어 시간이 걸렸지만, `<label>` 태그 안에 `<input type="radio />`와 `<div>` 태그를 넣어 해결. `<input />` 태그를 숨기는 트릭과 `peer`에 대해 알게 되었음
 
-### JavaScript
+JavaScript
 
 - `Intl` API를 통해 손쉽게 금액의 세자리수마다 쉼표를 찍어줄 수 있었음. 폼에 입력할 때도 쉼표를 붙여줌
 - 파일 분할이 되지 않아 늘어나는 코드를 관리하기 힘들었음. 결국 `Vite`를 사용해 프로젝트 관리
@@ -121,7 +121,7 @@
 
 날짜 헤딩 넣기
 
-### 배포 (GitHub Pages)
+배포 (GitHub Pages)
 
 - `GitHub Pages`에 배포가 잘 되지 않는 문제
   - 배포된 사이트에 들어가보니, `html` 파일만 있고 `js` 파일을 불러오지 못한 것 같아 네트워크 탭으로 확인해보니, `style.css` 파일과 `js` 파일 일부분을 불러오는 데에 실패
